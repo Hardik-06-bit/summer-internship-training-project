@@ -19,9 +19,8 @@ const Login = ({ onLoginSuccess }) => {
     e.preventDefault();
     setError('');
     const url = isSignIn
-      ? 'http://localhost:5000/api/auth/login'
-      : 'http://localhost:5000/api/auth/register';
-
+      ? 'https://summer-internship-training-project.onrender.com/api/auth/login'
+  : 'https://summer-internship-training-project.onrender.com/api/auth/register';
     try {
       const res = await axios.post(url, formData);
       localStorage.setItem('userInfo', JSON.stringify(res.data));
