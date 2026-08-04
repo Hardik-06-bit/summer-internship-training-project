@@ -1,7 +1,7 @@
 import React from 'react';
 import { 
   TrendingUp, BookOpen, Clock, AlertCircle, 
-  ArrowUpRight, CheckCircle2, FileText, Calendar 
+  ArrowUpRight, FileText, Calendar 
 } from 'lucide-react';
 
 export default function Dashboard() {
@@ -11,7 +11,6 @@ export default function Dashboard() {
       value: '85.4%', 
       status: 'Safe Zone (>75%)', 
       trend: '+2.1% this week',
-      isPositive: true,
       icon: TrendingUp,
       color: 'from-emerald-500/20 to-teal-500/20',
       borderColor: 'border-emerald-500/30',
@@ -22,7 +21,6 @@ export default function Dashboard() {
       value: '6 Courses', 
       status: 'Current Semester', 
       trend: '12 Lectures pending',
-      isPositive: true,
       icon: BookOpen,
       color: 'from-blue-500/20 to-indigo-500/20',
       borderColor: 'border-blue-500/30',
@@ -33,7 +31,6 @@ export default function Dashboard() {
       value: '02 Due Soon', 
       status: 'Action Required', 
       trend: 'Submit before Friday',
-      isPositive: false,
       icon: Clock,
       color: 'from-amber-500/20 to-orange-500/20',
       borderColor: 'border-amber-500/30',
@@ -43,8 +40,7 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 p-6 md:p-10 space-y-8 font-sans">
-      
-      {/* Dynamic Header Section */}
+      {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-slate-900/60 backdrop-blur-xl border border-slate-800 p-6 rounded-2xl shadow-2xl">
         <div>
           <div className="flex items-center gap-2 mb-1">
@@ -58,28 +54,22 @@ export default function Dashboard() {
         </div>
         
         <div className="flex gap-3">
-          <button className="px-4 py-2.5 rounded-xl border border-slate-700 bg-slate-800/80 hover:bg-slate-800 text-xs font-medium transition-all active:scale-95 flex items-center gap-2">
-            <Calendar className="w-4 h-4 text-slate-400" />
-            Academic Calendar
+          <button className="px-4 py-2.5 rounded-xl border border-slate-700 bg-slate-800/80 hover:bg-slate-800 text-xs font-medium transition-all flex items-center gap-2">
+            <Calendar className="w-4 h-4 text-slate-400" /> Academic Calendar
           </button>
-          <button className="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium shadow-lg shadow-indigo-600/20 transition-all active:scale-95 flex items-center gap-2">
-            <FileText className="w-4 h-4" />
-            Quick Report
+          <button className="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium shadow-lg transition-all flex items-center gap-2">
+            <FileText className="w-4 h-4" /> Quick Report
           </button>
         </div>
       </div>
 
-      {/* Modern Interactive Stats Cards */}
+      {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {stats.map((item, index) => {
           const Icon = item.icon;
           return (
-            <div 
-              key={index}
-              className={`group relative overflow-hidden bg-slate-900/40 backdrop-blur-md border ${item.borderColor} p-6 rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-indigo-500/10`}
-            >
-              <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${item.color} rounded-full blur-2xl group-hover:scale-150 transition-all duration-500`}></div>
-              
+            <div key={index} className={`group relative overflow-hidden bg-slate-900/40 backdrop-blur-md border ${item.borderColor} p-6 rounded-2xl transition-all duration-300 hover:-translate-y-1`}>
+              <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${item.color} rounded-full blur-2xl`}></div>
               <div className="relative z-10 flex justify-between items-start">
                 <div>
                   <p className="text-slate-400 text-xs font-medium uppercase tracking-wider">{item.label}</p>
@@ -89,60 +79,44 @@ export default function Dashboard() {
                   <Icon className="w-6 h-6" />
                 </div>
               </div>
-
               <div className="relative z-10 mt-6 flex items-center justify-between border-t border-slate-800/80 pt-4">
-                <span className={`text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-800 ${item.textColor}`}>
-                  {item.status}
-                </span>
-                <span className="text-xs text-slate-400 flex items-center gap-1">
-                  {item.trend}
-                  <ArrowUpRight className="w-3.5 h-3.5" />
-                </span>
+                <span className={`text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-800 ${item.textColor}`}>{item.status}</span>
+                <span className="text-xs text-slate-400 flex items-center gap-1">{item.trend} <ArrowUpRight className="w-3.5 h-3.5" /></span>
               </div>
             </div>
           );
         })}
       </div>
 
-      {/* Interactive Main Analytics Section */}
+      {/* Analytics Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
-        {/* Attendance & Subject Breakdown */}
         <div className="lg:col-span-2 bg-slate-900/40 border border-slate-800 rounded-2xl p-6 backdrop-blur-md space-y-6">
           <div className="flex justify-between items-center">
             <div>
               <h2 className="text-lg font-bold text-white">Subject-wise Performance</h2>
               <p className="text-xs text-slate-400">Current Semester Attendance Overview</p>
             </div>
-            <span className="text-xs text-indigo-400 font-semibold cursor-pointer hover:underline">View Detailed Logs</span>
           </div>
-
           <div className="space-y-4">
             {[
-              { subject: 'Data Structures & Algorithms', percentage: 92, status: 'Optimal' },
-              { subject: 'Database Management Systems', percentage: 88, status: 'Optimal' },
-              { subject: 'Operating Systems', percentage: 76, status: 'Warning' },
-              { subject: 'Computer Networks', percentage: 84, status: 'Optimal' }
+              { subject: 'Data Structures & Algorithms', percentage: 92 },
+              { subject: 'Database Management Systems', percentage: 88 },
+              { subject: 'Operating Systems', percentage: 76 },
+              { subject: 'Computer Networks', percentage: 84 }
             ].map((sub, idx) => (
               <div key={idx} className="bg-slate-800/40 border border-slate-800/60 p-4 rounded-xl space-y-2">
                 <div className="flex justify-between text-xs font-medium">
                   <span className="text-slate-200">{sub.subject}</span>
-                  <span className={sub.percentage < 80 ? 'text-amber-400 font-bold' : 'text-emerald-400 font-bold'}>
-                    {sub.percentage}%
-                  </span>
+                  <span className={sub.percentage < 80 ? 'text-amber-400 font-bold' : 'text-emerald-400 font-bold'}>{sub.percentage}%</span>
                 </div>
                 <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
-                  <div 
-                    className={`h-full transition-all duration-1000 ${sub.percentage < 80 ? 'bg-amber-500' : 'bg-emerald-500'}`} 
-                    style={{ width: `${sub.percentage}%` }}
-                  ></div>
+                  <div className={`h-full ${sub.percentage < 80 ? 'bg-amber-500' : 'bg-emerald-500'}`} style={{ width: `${sub.percentage}%` }}></div>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Live Notification Activity Stream */}
         <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-6 backdrop-blur-md space-y-4">
           <h2 className="text-lg font-bold text-white">Upcoming Deadlines</h2>
           <div className="space-y-3">
@@ -151,22 +125,17 @@ export default function Dashboard() {
               { title: 'OS Mid-Term Evaluation', time: 'Aug 10, 2026', priority: 'Medium', type: 'Exam' },
               { title: 'Mini Project Synopsis', time: 'Aug 14, 2026', priority: 'Low', type: 'Project' }
             ].map((item, i) => (
-              <div key={i} className="flex items-start gap-3 p-3 bg-slate-800/30 rounded-xl border border-slate-800 hover:border-slate-700 transition-all">
-                <div className="mt-0.5">
-                  <AlertCircle className={`w-4 h-4 ${item.priority === 'High' ? 'text-rose-400' : 'text-amber-400'}`} />
-                </div>
+              <div key={i} className="flex items-start gap-3 p-3 bg-slate-800/30 rounded-xl border border-slate-800">
+                <AlertCircle className={`w-4 h-4 mt-0.5 ${item.priority === 'High' ? 'text-rose-400' : 'text-amber-400'}`} />
                 <div className="flex-1">
                   <p className="text-xs font-semibold text-slate-200">{item.title}</p>
                   <p className="text-[11px] text-slate-400">{item.time}</p>
                 </div>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300">
-                  {item.type}
-                </span>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300">{item.type}</span>
               </div>
             ))}
           </div>
         </div>
-
       </div>
     </div>
   );
